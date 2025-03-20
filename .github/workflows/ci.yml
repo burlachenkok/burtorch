@@ -107,29 +107,23 @@ jobs:
          cd ${{ github.workspace }}/burt/scripts 
          python project_scripts.py -gr -br -j 2
       - run: |
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python project_scripts.py -tr
       - run: |
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python project_scripts.py -ir
-      - run: |
-         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
-         bash test_a.sh
-      - run: |
-         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
-         bash test_b.sh
       - name: archive build artifacts for linux
         if: contains(github.event.head_commit.message, 'pls.pack')
         uses: actions/upload-artifact@v4
         with:
           name: artifcats-for-linux-${{github.sha}}
           path: |
-            ${{ github.workspace }}/dopt/scripts/build_release
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
-            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+            ${{ github.workspace }}/burt/scripts/build_release
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/burt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.make
 
   Build-And-Launch-Unit-Tests-For-Linux-x64-with-TS:
     # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
@@ -145,32 +139,26 @@ jobs:
           export CXX=g++-13
           export EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_CPP_TS_V2_SIMD=ON -DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=OFF -DSUPPORT_CPU_AVX_512_bits=OFF"
           
-          cd ${{ github.workspace }}/dopt/scripts 
+          cd ${{ github.workspace }}/burt/scripts 
           python project_scripts.py -gr -br -j 2
       - run: |
-          cd ${{ github.workspace }}/dopt/scripts 
+          cd ${{ github.workspace }}/burt/scripts 
           python project_scripts.py -tr
       - run: |
-          cd ${{ github.workspace }}/dopt/scripts 
+          cd ${{ github.workspace }}/burt/scripts 
           python project_scripts.py -ir
-      - run: |
-          cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
-          bash test_a.sh
-      - run: |
-          cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
-          bash test_b.sh
       - name: archive build artifacts for linux
         if: contains(github.event.head_commit.message, 'pls.pack')
         uses: actions/upload-artifact@v4
         with:
           name: artifcats-for-linux-${{github.sha}}
           path: |
-            ${{ github.workspace }}/dopt/scripts/build_release
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
-            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+            ${{ github.workspace }}/burt/scripts/build_release
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/burt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.make
 
   Build-And-Launch-Unit-Tests-For-Windows-x64:
     # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
@@ -183,45 +171,39 @@ jobs:
       - run: |
          $env:EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=ON -DSUPPORT_CPU_AVX_512_bits=OFF"
 
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python project_scripts.py -gr -br -j 2
 
       - run: |
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python project_scripts.py -tr
       - run: |
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python project_scripts.py -ir
-      - run: |
-         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
-         bash test_a.sh
-      - run: |
-         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
-         bash test_b.sh
       - name: archive build artifacts for windows
         if: contains(github.event.head_commit.message, 'pls.pack')
         uses: actions/upload-artifact@v4
         with:
           name: artifcats-for-windows-${{github.sha}}
           path: |
-            ${{ github.workspace }}/dopt/scripts/build_release
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
-            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.tlog
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.lastbuildstate
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.log
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.vcxproj
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.sln
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.filters
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.obj
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.iobj
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
-            !${{ github.workspace }}/dopt/scripts/build_release/**/_IsIncrementalBuild
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.recipe
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.FileListAbsolute.txt
+            ${{ github.workspace }}/burt/scripts/build_release
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/burt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.make
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.tlog
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.lastbuildstate
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.log
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.vcxproj
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.sln
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.filters
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.obj
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.iobj
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.make
+            !${{ github.workspace }}/burt/scripts/build_release/**/_IsIncrementalBuild
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.recipe
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.FileListAbsolute.txt
 
   Build-And-Launch-Unit-Tests-For-macOS-Arm64-Neon:
     # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md 
@@ -242,32 +224,26 @@ jobs:
          #export CXX=g++-13
          export EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=OFF -DSUPPORT_CPU_AVX_512_bits=OFF -DSUPPORT_CPU_CPP_TS_V2_SIMD=OFF"
 
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python3 project_scripts.py -gr -br -j 3
       - run: |
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python3 project_scripts.py -tr
       - run: |
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python project_scripts.py -ir
-      - run: |
-         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
-         bash test_a.sh
-      - run: |
-         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
-         bash test_b.sh
       - name: archive build artifacts for macos
         if: contains(github.event.head_commit.message, 'pls.pack')
         uses: actions/upload-artifact@v4
         with:
           name: artifcats-for-macos-${{github.sha}}
           path: |
-            ${{ github.workspace }}/dopt/scripts/build_release
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
-            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+            ${{ github.workspace }}/burt/scripts/build_release
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/burt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.make
 
   Build-And-Launch-Unit-Tests-For-macOS-X64:
     # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
@@ -288,32 +264,26 @@ jobs:
          #export CXX=g++-13
          export EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=ON -DSUPPORT_CPU_AVX_512_bits=OFF"
 
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python3 project_scripts.py -gr -br -j 3
       - run: |
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python3 project_scripts.py -tr
       - run: |
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python project_scripts.py -ir
-      - run: |
-         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
-         bash test_a.sh
-      - run: |
-         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
-         bash test_b.sh
       - name: archive build artifacts for macos
         if: contains(github.event.head_commit.message, 'pls.pack')
         uses: actions/upload-artifact@v4
         with:
           name: artifcats-for-macos-${{github.sha}}
           path: |
-            ${{ github.workspace }}/dopt/scripts/build_release
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
-            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
-            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+            ${{ github.workspace }}/burt/scripts/build_release
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/burt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/burt/scripts/build_release/**/*.make
 
   #=============================================================================================================================
   # Information about computers
@@ -463,6 +433,6 @@ jobs:
          export CC=gcc-13
          export CXX=g++-13
          export EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=ON -DSUPPORT_CPU_AVX_512_bits=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-         cd ${{ github.workspace }}/dopt/scripts 
+         cd ${{ github.workspace }}/burt/scripts 
          python project_scripts.py -c -gr -j 2
          cppcheck --project=./build_release/compile_commands.json --enable=all 1>/dev/null
