@@ -9,14 +9,15 @@ The goal of this document is to describe how after preparing the environment lau
 # Reliable Measurements
 
 Please use provided scripts to prepare your environment from:
+
 * `prepare folder`: The most critical thing you need to fix the clock rate of CPU during experiments.
+
 * `use 2nd CPU core`: Please launch experiments in the second CPU Core, because first CPU core very often use by system to handle interrupts in the kernel of OS.
-
-
 
 # BaseLines
 
-The baselines scripts for experiments in the paper available here:
+The baseline scripts for the experiments presented in the paper are available here:
+
 * experiments/exp1_tiny_example
 * experiments/exp2_small_example
 * experiments/exp3_small_example_loading
