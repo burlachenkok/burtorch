@@ -1,0 +1,27 @@
+digraph "manual-autograd" {
+node [shape=record];
+
+9[label = "g = f * 0.5|operator* [bin]| grad:1| data:612.5|#9", style=filled, fillcolor=yellow];
+7[label = "f = e^2|x^2 [s]| grad:0.5| data:1225|#7"];
+8[label = "0.5|leaf| grad:1225| data:0.5|#8", style=filled, fillcolor=green];
+6[label = "e = c - d|operator- [bin]| grad:35| data:35|#6"];
+2[label = "c = a+b|operator+ [bin]| grad:35| data:-39|#2"];
+5[label = "d = ab + b^3|operator+ [bin]| grad:-35| data:-74|#5"];
+3[label = "ab = a * b|operator* [bin]| grad:-35| data:-82|#3"];
+4[label = "b^3|x^3 [s]| grad:-35| data:8|#4"];
+1[label = "b|leaf| grad:1050| data:2|#1", style=filled, fillcolor=green];
+0[label = "a|leaf| grad:-35| data:-41|#0", style=filled, fillcolor=green];
+
+9->7;
+9->8;
+7->6;
+6->2;
+6->5;
+5->3;
+5->4;
+4->1;
+3->0;
+3->1;
+2->0;
+2->1;
+}
