@@ -1,0 +1,468 @@
+# Documentation: 
+#  https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions
+#  https://docs.github.com/en/actions/using-workflows/about-workflows
+
+# GitHub Actions is a continuous integration and continuous delivery.
+#_______________________________________________________________________________________________________________________________
+# Terminology: 
+
+#   Workflow - is a configurable automated process that will run one or more jobs
+
+#   Event  - is a specific activity in a repository that triggers a workflow run. 
+
+#   Runner - is a server that runs your workflows when they're triggered. Each runner can run a single job at a time. 
+#             GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners.
+
+#   Job    - is a set of steps in a workflow that execute on the same runner. 
+
+#   Step   - is either a shell script that will be executed, or an action that will be run.
+
+#   Action - is a custom application for the GitHub Actions platform that performs a complex but frequently repeated task. 
+#_______________________________________________________________________________________________________________________________
+
+# Environment variables: 
+#   https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
+#_______________________________________________________________________________________________________________________________
+
+# Extra utilized actions:
+#   https://github.com/marketplace/actions/delete-workflow-runs
+
+# Github runners:
+#   https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+#   https://github.com/actions/runner-images#available-images
+#
+
+# The name of the workflow as it will appear in the "Actions" tab of the GitHub repository.
+
+name: Build project and carry tests
+
+# The name for workflow runs generated from the workflow, 
+#  which will appear in the list of workflow runs on your repository Actions tab.
+run-name: ${{ github.actor }} has triggered Build and Launch Unittests for the project ��
+
+# Specifies the trigger for this workflow.
+on: [push]
+
+# To set a custom environment variable, you must define it in the workflow file.
+
+# Example with specifying CC and CXX compilers:
+#   CC: /usr/bin/gcc-10
+#   CXX: /usr/bin/g++-10
+
+# Groups together all the jobs
+#   Configures the job to run on the latest version of an Ubuntu Linux runner
+#   The run keyword tells the job to execute a command on the runner
+
+# Table of fun unicode symbols:
+#   https://www.vertex42.com/ExcelTips/unicode-symbols.html
+#================================================================================================================================
+
+# To activate CI please add the following text into commit message
+#________________________________________________________________________________________________________________________________
+# pls.build        | Make build and launch unit tests and regression tests
+# pls.pack         | Prepare artifacts from the build
+# pls.info         | Print information about computers
+# pls.clean-github | Cleanup github from old workflows 
+# pls.check-src    | Run various tools that checks the source code
+#________________________________________________________________________________________________________________________________
+
+jobs:
+  #==============================================================================================================================
+  # Remove old workflow runs
+  #==============================================================================================================================
+
+  Remove-Old-Workflow-Runs:
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: write
+      contents: read
+
+    if: contains(github.event.head_commit.message, 'pls.clean-github')
+    steps:
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 15
+          keep_minimum_runs: 6
+  #==============================================================================================================================
+  # Build and Launch Unit Tests
+  #==============================================================================================================================
+  Build-And-Launch-Unit-Tests-For-Linux-x64:
+    # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'pls.build')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "�� The ${{ github.repository }} repository has been cloned to the runner into " ${{ github.workspace }}
+      - run: sudo apt-get install -y swig
+      - run: |
+         export CC=gcc-13
+         export CXX=g++-13
+         export EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=ON -DSUPPORT_CPU_AVX_512_bits=OFF"
+
+         cd ${{ github.workspace }}/burt/scripts 
+         python project_scripts.py -gr -br -j 2
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts 
+         python project_scripts.py -tr
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts 
+         python project_scripts.py -ir
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
+         bash test_a.sh
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
+         bash test_b.sh
+      - name: archive build artifacts for linux
+        if: contains(github.event.head_commit.message, 'pls.pack')
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifcats-for-linux-${{github.sha}}
+          path: |
+            ${{ github.workspace }}/dopt/scripts/build_release
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+
+  Build-And-Launch-Unit-Tests-For-Linux-x64-with-TS:
+    # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'pls.build')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "�� The ${{ github.repository }} repository has been cloned to the runner into " ${{ github.workspace }}
+      - run: sudo apt-get install -y swig
+      - run: |
+          export CC=gcc-13
+          export CXX=g++-13
+          export EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_CPP_TS_V2_SIMD=ON -DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=OFF -DSUPPORT_CPU_AVX_512_bits=OFF"
+          
+          cd ${{ github.workspace }}/dopt/scripts 
+          python project_scripts.py -gr -br -j 2
+      - run: |
+          cd ${{ github.workspace }}/dopt/scripts 
+          python project_scripts.py -tr
+      - run: |
+          cd ${{ github.workspace }}/dopt/scripts 
+          python project_scripts.py -ir
+      - run: |
+          cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
+          bash test_a.sh
+      - run: |
+          cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
+          bash test_b.sh
+      - name: archive build artifacts for linux
+        if: contains(github.event.head_commit.message, 'pls.pack')
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifcats-for-linux-${{github.sha}}
+          path: |
+            ${{ github.workspace }}/dopt/scripts/build_release
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+
+  Build-And-Launch-Unit-Tests-For-Windows-x64:
+    # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
+    runs-on: windows-latest
+    if: contains(github.event.head_commit.message, 'pls.build')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "�� The ${{ github.repository }} repository has been cloned to the runner into " ${{ github.workspace }}
+      - run: |
+         $env:EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=ON -DSUPPORT_CPU_AVX_512_bits=OFF"
+
+         cd ${{ github.workspace }}/dopt/scripts 
+         python project_scripts.py -gr -br -j 2
+
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts 
+         python project_scripts.py -tr
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts 
+         python project_scripts.py -ir
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
+         bash test_a.sh
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
+         bash test_b.sh
+      - name: archive build artifacts for windows
+        if: contains(github.event.head_commit.message, 'pls.pack')
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifcats-for-windows-${{github.sha}}
+          path: |
+            ${{ github.workspace }}/dopt/scripts/build_release
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.tlog
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.lastbuildstate
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.log
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.vcxproj
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.sln
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.filters
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.obj
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.iobj
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+            !${{ github.workspace }}/dopt/scripts/build_release/**/_IsIncrementalBuild
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.recipe
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.FileListAbsolute.txt
+
+  Build-And-Launch-Unit-Tests-For-macOS-Arm64-Neon:
+    # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md 
+    runs-on: macos-13-xlarge
+    if: contains(github.event.head_commit.message, 'pls.build') && false
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "�� The ${{ github.repository }} repository has been cloned to the runner into " ${{ github.workspace }}
+      - name: Install Homebrew
+        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
+      - name: Install SWIG
+        run: |
+          brew update
+          brew install swig
+      - run: |
+         #export CC=gcc-13
+         #export CXX=g++-13
+         export EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=OFF -DSUPPORT_CPU_AVX_512_bits=OFF -DSUPPORT_CPU_CPP_TS_V2_SIMD=OFF"
+
+         cd ${{ github.workspace }}/dopt/scripts 
+         python3 project_scripts.py -gr -br -j 3
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts 
+         python3 project_scripts.py -tr
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts 
+         python project_scripts.py -ir
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
+         bash test_a.sh
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
+         bash test_b.sh
+      - name: archive build artifacts for macos
+        if: contains(github.event.head_commit.message, 'pls.pack')
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifcats-for-macos-${{github.sha}}
+          path: |
+            ${{ github.workspace }}/dopt/scripts/build_release
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+
+  Build-And-Launch-Unit-Tests-For-macOS-X64:
+    # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
+    runs-on: macos-14
+    if: contains(github.event.head_commit.message, 'pls.build')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "�� The ${{ github.repository }} repository has been cloned to the runner into " ${{ github.workspace }}
+      - name: Install Homebrew
+        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
+      - name: Install SWIG
+        run: |
+          brew update
+          brew install swig
+      - run: |
+         #export CC=gcc-13
+         #export CXX=g++-13
+         export EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=ON -DSUPPORT_CPU_AVX_512_bits=OFF"
+
+         cd ${{ github.workspace }}/dopt/scripts 
+         python3 project_scripts.py -gr -br -j 3
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts 
+         python3 project_scripts.py -tr
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts 
+         python project_scripts.py -ir
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_a
+         bash test_a.sh
+      - run: |
+         cd ${{ github.workspace }}/dopt/scripts/regression_tests/test_b
+         bash test_b.sh
+      - name: archive build artifacts for macos
+        if: contains(github.event.head_commit.message, 'pls.pack')
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifcats-for-macos-${{github.sha}}
+          path: |
+            ${{ github.workspace }}/dopt/scripts/build_release
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/CMakeFiles
+            !${{ github.workspace }}/dopt/scripts/build_release/**/Makefile
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.cmake
+            !${{ github.workspace }}/dopt/scripts/build_release/**/*.make
+
+  #=============================================================================================================================
+  # Information about computers
+  #=============================================================================================================================
+  Information-About-The-Linux-System:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'pls.info')
+    steps:
+      - run: |
+         echo "�� The job was triggered by a ${{ github.event_name }} event."
+         echo "This job is running on a ${{ runner.os }} server hosted by GitHub."
+         echo "The name of branch is ${{ github.ref }}. The repository name is ${{ github.repository }}."
+
+      - run: |
+         echo "�� Information about the system."
+         echo "Computer architecture:" $(arch)
+         echo "GCC version:" $(gcc --version)
+         echo "Clang version:" $(clang --version)
+         echo "Python version:" $(python --version)
+         cmake --version
+      - run: |
+         echo "Installed versions of CLang in system"
+         ls /usr/bin/clang*
+      - run: |
+         echo "Installed versions of GCC in system"
+         ls /usr/bin/gcc*
+      - run: |
+         echo "Linux verion:" $(uname -a)
+         echo "Linux distribution specific information"
+         lsb_release --all
+      - run: |
+         echo "Information about CPU"
+         echo "Number of processors in system:" $(nproc)
+         lscpu
+         lscpu --extended
+         
+  Information-About-The-Windows-System:
+    # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
+    runs-on: windows-latest
+    if: contains(github.event.head_commit.message, 'pls.info')
+    steps:
+      - run: |
+         echo "�� The job was triggered by a ${{ github.event_name }} event."
+         echo "This job is running on a ${{ runner.os }} server hosted by GitHub."
+         echo "The name of branch is ${{ github.ref }}. The repository name is ${{ github.repository }}."
+      - run: |
+         echo "�� Information about the system."
+         echo "Computer architecture:" $(arch)
+         echo "Python version:" $(python --version)
+         cmake --version
+      - run: |
+         systeminfo
+
+  Information-About-The-macOS-Arm64-System:
+    # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
+    runs-on: macos-13-xlarge
+    if: contains(github.event.head_commit.message, 'pls.info') && false
+    steps:
+      - run: |
+         echo "�� The job was triggered by a ${{ github.event_name }} event."
+         echo "This job is running on a ${{ runner.os }} server hosted by GitHub."
+         echo "The name of branch is ${{ github.ref }}. The repository name is ${{ github.repository }}."
+      - run: |
+         echo "�� Information about the system."
+         echo "Computer architecture:" $(arch)
+         #echo "GCC version:" $(gcc --version)
+         echo "Clang version:" $(clang --version)
+         echo "Python version:" $(python --version)
+         cmake --version
+      - run: |
+         echo "Installed versions of CLang in system"
+         ls /usr/bin/clang*
+      - run: |
+         echo "Installed versions of GCC in system"
+         ls /usr/bin/gcc*
+         gcc-12 --version
+         gcc-13 --version
+
+         g++-12 --version
+         g++-13 --version
+
+      - run: |
+         echo "macOS verion:" $(uname -a)
+         echo "Number of processors in system:"
+         sysctl -n hw.physicalcpu
+         echo "Information about system:"
+         sysctl -a
+
+  Information-About-The-macOS-X64-System:
+    # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
+    runs-on: macos-14
+    if: contains(github.event.head_commit.message, 'pls.info')
+    steps:
+      - run: |
+         echo "�� The job was triggered by a ${{ github.event_name }} event."
+         echo "This job is running on a ${{ runner.os }} server hosted by GitHub."
+         echo "The name of branch is ${{ github.ref }}. The repository name is ${{ github.repository }}."
+      - run: |
+         echo "�� Information about the system."
+         echo "Computer architecture:" $(arch)
+         echo "GCC version:" $(gcc --version)
+         echo "Clang version:" $(clang --version)
+         echo "Python version:" $(python --version)
+         cmake --version
+      - run: |
+         echo "Installed versions of CLang in system"
+         ls /usr/bin/clang*
+      - run: |
+         echo "Installed versions of GCC in system"
+         ls /usr/bin/gcc*
+         gcc-12 --version
+         gcc-13 --version
+
+         g++-12 --version
+         g++-13 --version
+
+      - run: |
+         echo "macOS verion:" $(uname -a)
+         echo "Number of processors in system:"
+         sysctl -n hw.physicalcpu
+         echo "Information about system:"
+         sysctl -a
+
+  #=============================================================================================================================
+  Check-Source-Ubuntu-x64:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'pls.check-src')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "�� The ${{ github.repository }} repository has been cloned to the runner into " ${{ github.workspace }}
+
+      - run: |
+         sudo apt-get install -y cloc cppcheck
+
+      - run: |
+         echo "Cloc aggregate statistics"
+         cd ${{ github.workspace }}
+         cloc --exclude-dir=3rdparty,build_debug,build_release,draft .
+
+      - run: |
+         echo "Cloc with per file statistics" 
+         cd ${{ github.workspace }}
+         cloc --by-file --exclude-dir=3rdparty,build_debug,build_release,draft .
+
+      - run: |
+         export CC=gcc-13
+         export CXX=g++-13
+         export EXTRA_CMAKE_ARGS="-DSUPPORT_CPU_SSE2_128_bits=OFF -DSUPPORT_CPU_AVX_256_bits=ON -DSUPPORT_CPU_AVX_512_bits=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+         cd ${{ github.workspace }}/dopt/scripts 
+         python project_scripts.py -c -gr -j 2
+         cppcheck --project=./build_release/compile_commands.json --enable=all 1>/dev/null
