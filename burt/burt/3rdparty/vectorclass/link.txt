@@ -1,0 +1,9 @@
+https://www.agner.org/optimize/
+https://github.com/vectorclass/version2
+https://github.com/vectorclass/add-on/tree/master/physical_processors
+
+Used version:
+  https://github.com/vectorclass/version2/releases/tag/v2.02.00
+  Version 2.02.00 Latest
+  @AgnerF AgnerF released this Aug 07, 2022
+
