@@ -1,0 +1,75 @@
+WE
+    // b  mean     std.dev
+    // 1: 0.525    0.069
+    // 2: 1.032    0.075
+    // 4: 2.051    0.108
+    // 8: 4.042    0.186
+    // 16: 8.046   0.312
+    // 32: 15.996  0.610
+    // 64: 31.696  0.737
+
+
+
+Python
+    
+    // b  mean     std.dev
+  >  // 1: 
+step 2990 | loss 3.572577476501465 | avg time 12.183161014619408ms | std.dev for time 33.58069824641572ms
+model #params: 46337 | batch: 1
+
+  >  // 2: 
+step 2990 | loss 3.821474313735962 | avg time 12.121122364055644ms | std.dev for time 14.590195230007255ms
+model #params: 46337 | batch: 2
+
+  >  // 4: avg time 12.865565445701295ms | std.dev for time 33.77500846016614ms
+              model #params: 46337 | batch: 4
+
+  >  // 8: 
+  step 2990 | loss 3.512331962585449 | avg time 13.516864263266044ms | std.dev for time 33.18870955241702ms
+model #params: 46337 | batch: 8
+
+  >  // 16: 
+step 2990 | loss 3.5065104961395264 | avg time 14.418303627746223ms | std.dev for time 12.936328474190242ms
+model #params: 46337 | batch: 16
+
+  >  // 32: 
+step 2990 | loss 3.5929172039031982 | avg time 17.38357376550111ms | std.dev for time 12.385701392582243ms
+model #params: 46337 | batch: 32
+
+  >  // 64: 
+
+step 2990 | loss 3.5608911514282227 | avg time 22.200346072753938ms | std.dev for time 14.56531481689335ms
+model #params: 46337 | batch: 64
+
+
+
+Pythorhc-JIT
+    
+    // b  mean     std.dev
+  >  // 1: 
+step 2990 | loss 3.5725784301757812 | avg time 10.795414228576393ms | std.dev for time 37.48770885220117ms
+model #params: 46337 | batch: 1
+
+  >  // 2: 
+step 2990 | loss 3.8214752674102783 | avg time 11.39878015062235ms | std.dev for time 37.49346948186667ms
+model #params: 46337 | batch: 2
+
+  >  // 4:
+step 2990 | loss 3.8220746517181396 | avg time 12.098697466580832ms | std.dev for time 49.29980662450023ms
+model #params: 46337 | batch: 4
+
+  >  // 8: 
+step 2990 | loss 3.51233172416687 | avg time 12.600288148788804ms | std.dev for time 49.80932502763569ms
+model #params: 46337 | batch: 8
+
+  >  // 16: 
+step 2990 | loss 3.5065102577209473 | avg time 13.421979487759353ms | std.dev for time 37.37236394405915ms
+model #params: 46337 | batch: 16
+
+  >  // 32: 
+step 2990 | loss 3.5929172039031982 | avg time 16.776875563187613ms | std.dev for time 48.49918145103042ms
+model #params: 46337 | batch: 32
+
+  >  // 64: 
+| avg time 22.3741037954816ms | std.dev for time 48.98335886335453ms
+
