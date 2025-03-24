@@ -874,7 +874,8 @@ int main(int argc, char** argv)
     constexpr size_t kPrintFreq = 500;
 
     constexpr bool kPrintDetailedInfo = !true;                                              // print detailed information
-    constexpr size_t kIterationsPrintFreq = 100;                                             // print frequency for memory reports
+    constexpr size_t kIterationsPrintFreq = 100;                                            // print frequency for memory reports
+
     double time_to_process_avg = 0.0;
     double time_to_process_sqr_avg = 0.0;
 
@@ -906,13 +907,8 @@ int main(int argc, char** argv)
 
         model.embedding(C_at_x, X);
 
-        //Value<float>::restoreCheckpoint(chkpoint);
-
         size_t processed_samples = 0;
 
-        //std::vector<std::vector<std::vector<Value<float>>>> x_in_btc; // B,T,C
-
-        //Value<float> loss_total = Value<float>(0.0);
         float loss_avg = 0.0;
         {
             std::vector<Value<float>> logits;
@@ -941,7 +937,6 @@ int main(int argc, char** argv)
 
             for (size_t iSample = 0; iSample < k_batch_size; ++iSample)
             {
-                if (1)
                 {
                     logits.clear();
                     countsExp.clear();
@@ -1103,7 +1098,7 @@ int main(int argc, char** argv)
                 }
 
                 assert(x_in_tc.size() == k_block_size);
-                //k_block_size
+
                 constexpr size_t t_sz = k_block_size;              
 
                 for (size_t t = 0; t < t_sz; ++t)
@@ -1122,7 +1117,7 @@ int main(int argc, char** argv)
                     // H(p) = -\sum pi * log(pi)
                     // KL(p,q) + H(p) = -\sum (pi * log(qi))
                     // CE(p,q) = -\sum (pi * log(qi))
-                    // CE(one-hot)=-log(qi)
+                    // CE(one-hot) = -log(qi)
                     auto true_label = Y[iSample][t];
                     Value<float> pi = countsExp[true_label] / countsExpSum;
                     Value<float> loss = negativeLog(pi);
@@ -1139,7 +1134,6 @@ int main(int argc, char** argv)
             }
         }
 
-        //constexpr size_t processed_samples = k_batch_size;
         float one_inv_processed_samples = 1.0 / float(processed_samples);
         float lr = 3e-4;
         float one_inv_processed_samples_times_lr = one_inv_processed_samples * lr;
@@ -1158,7 +1152,6 @@ int main(int argc, char** argv)
         double time_to_process = timer_to_process.getTimeSec();
         time_to_process_avg = (double(e - 1) / double(e) * time_to_process_avg + time_to_process / double(e));
         time_to_process_sqr_avg = (double(e - 1) / double(e) * time_to_process_sqr_avg + time_to_process * time_to_process / double(e));
-        //time_to_process_avg = time_to_process;
 
         if (e % kIterationsPrintFreq == 0)
         {
@@ -1185,7 +1178,6 @@ int main(int argc, char** argv)
                 my_log_stream() << "  ->Train Mem. Consumption: [" << e << '/' << kMaxIterations << "]\n"
                     << "| nodes names mem.: " << stats.occupied_memory.labelsMemory / 1024. << " Kb\n"
                     << "| nodes backward type mem.: " << stats.occupied_memory.bwdOpDescrMemory / 1024. << " Kb\n"
-                    //<< "| nodes visiting number for backprop mem.: " << memory_stats.visitingNumberForBackpropMemory / 1024. << " KBytes \n"
                     << "| nodes children topology mem.: " << stats.occupied_memory.childrenTopologyMemory / 1024. << " Kb\n"
                     << "| nodes activations mem.: " << stats.occupied_memory.activationsMemory / 1024. << " Kb\n"
                     << "| nodes grads mem.: " << stats.occupied_memory.gradsMemory / 1024. << " Kb\n\n\n";

@@ -61,26 +61,16 @@ int main(int argc, char** argv)
         typedef float emb_type;                                                                 // type of element for single embeded item
         constexpr size_t kEmbeddingSize = 64;                                                   // embedded vector dimension to encode invidual characters in space emb_type**64
         
-        //constexpr size_t kBatchSize = 64;                                                    // batch size for one iteration [TUNE]
-        constexpr size_t kBatchSize = 64;                                                   // batch size for one iteration [TUNE]
-        constexpr size_t hidden_dim = 1024;                                                       // model specific hidden layer dimension [TUNE]
+        //constexpr size_t kBatchSize = 64;                                                     // batch size for one iteration [TUNE]
+        constexpr size_t kBatchSize = 64;                                                       // batch size for one iteration [TUNE]
+        constexpr size_t hidden_dim = 1024;                                                     // model specific hidden layer dimension [TUNE]
 
         constexpr bool kPrintDetailedInfo = !true;                                              // print detailed information
         constexpr size_t kIterationsPrintFreq = 10;                                             // print frequency for memory reports
 
-        constexpr size_t kTotalIterations = 4000;                                                 // fixed number of steps/iterations to process batches, where one iteration -- process one batch
+        constexpr size_t kTotalIterations = 4000;                                               // fixed number of steps/iterations to process batches, where one iteration -- process one batch
 
         constexpr bool kUsedSIMD4Compute = !true;                                               // used CPU SIMD
-#if 0
-        ->Train: [4000 / 4000] | Loss : 3.002 | Grad l2 norm sqr : -1 | Avg Time : 13.4881 msec.
-            | Std.dev for time : 0.62586 msec.
-            | Params : 136411
-
-            Total computate and parse time : 54549.2 msec.
-
-            ~batch : 64
-            ~hidden dim : 128
-#endif
 
         burt::HighPrecisionTimer timer_main;
         my_log_stream() << "step-1: read file for character based generation model from: " << fname_open << '\n';
@@ -398,17 +388,6 @@ int main(int argc, char** argv)
                         W2.forward<hidden_dim> (counts_cached, fwd_value_after_tanh_cached.data());
 
                         {
-    #if 0
-                            size_t totalCharacters_Div_4 = burt::roundToNearestMultipleDown<4>(totalCharacters);
-
-                            for (size_t k = 0; k != totalCharacters_Div_4; k += 4)
-                            {
-                                counts_exp_cached[k]   = std::move(exp(counts_cached[k]));
-                                counts_exp_cached[k+1] = std::move(exp(counts_cached[k+1]));
-                                counts_exp_cached[k+2] = std::move(exp(counts_cached[k+2]));
-                                counts_exp_cached[k+3] = std::move(exp(counts_cached[k+3]));
-                            }
-    #endif
                             if (counts_exp_cached.size() != counts_cached.size())
                                 counts_exp_cached.resize(counts_cached.size());
 
@@ -438,8 +417,12 @@ int main(int argc, char** argv)
 
                     // We don't evaluate countsExp[not-true_label] because we actually do not need it at all.
 
-                    // KL(p,q) = \sum (pi * log(pi/qi))          H(p) = -\sum pi * log(pi)        KL(p,q) + H(p) = -\sum (pi * log(qi))
-                    // CE(p,q) = -\sum (pi * log(qi))         =>   CE(one-hot)=-log(qi)
+                    // KL(p,q) = \sum (pi * log(pi/qi))
+                    // H(p) = -\sum pi * log(pi) 
+                    // KL(p,q) + H(p) = -\sum (pi * log(qi))
+                    // 
+                    // CE(p,q) = -\sum (pi * log(qi))       
+                    //  =>   CE(one-hot) = -log(qi)
 
                     // backward pass: run backward
                     if (prev_true_label != true_label)
@@ -530,7 +513,6 @@ int main(int argc, char** argv)
     Value<float>::deactiveUnusedNodes();
     auto nodes_at_end = Value<float>::numActiveNodes();
     assert(nodes_at_end == nodes_at_start);
-
 
     if (kMakePauseAtEnd)
         getchar();
