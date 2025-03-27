@@ -36,7 +36,7 @@ The baseline scripts for the experiments are presented in the table below. Pleas
 # Utils
 
 * [compute](./experiments/utils/compute): Help scripts make computations with humans in the loop.
-* [measure]./experiments/utils/(measure): A small binary that measures the execution time of the process under Windows OS. 
+* [measure](./experiments/utils/(measure): A small binary that measures the execution time of the process under Windows OS. 
 * [prepare](./experiments/utils/prepare): Help scripts to prepare environments for reliable measurements.
 * [plotgraph](./experiments/utils/plotgraph) Helped the script visualize graphs from text descriptions in dot format via invoking a dot binary application from Graphviz.
 * [plotenergy](./experiments/utils/plotenergy): Help scripts to prepare visualization for consumed energy.
