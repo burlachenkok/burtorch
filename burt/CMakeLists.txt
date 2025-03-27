@@ -154,9 +154,12 @@ endif()
 
 # Add NN experiments
 if (BURT_INCLUDE_NN_EXPERIMENTS)
+    add_subdirectory(bin_tiny_example)
+    add_subdirectory(bin_small_example)
+    add_subdirectory(bin_small_example_loading)
+    add_subdirectory(bin_small_example_saving)
+    add_subdirectory(bin_makemore_nlp_example)
     add_subdirectory(bin_gpt_example)
-    add_subdirectory(bin_makemore_example)
-    add_subdirectory(bin_small_graph_example)
 endif()
 
 add_subdirectory(burtcore)
