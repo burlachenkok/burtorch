@@ -377,7 +377,21 @@ inline burt::CppSimdWrapper<T> minimum(const burt::CppSimdWrapper<T>& a, const b
 }
 
 template <class T>
+inline burt::CppSimdWrapper<T> min(const burt::CppSimdWrapper<T>& a, const burt::CppSimdWrapper<T>& b)
+{
+    burt::CppSimdWrapper<T> res = burt::CppSimdWrapper<T>::createSimdFromVec(::std::experimental::min(a.data, b.data));
+    return res;
+}
+
+template <class T>
 inline burt::CppSimdWrapper<T> maximum(const burt::CppSimdWrapper<T>& a, const burt::CppSimdWrapper<T>& b)
+{
+    burt::CppSimdWrapper<T> res = burt::CppSimdWrapper<T>::createSimdFromVec(::std::experimental::max(a.data, b.data));
+    return res;
+}
+
+template <class T>
+inline burt::CppSimdWrapper<T> max(const burt::CppSimdWrapper<T>& a, const burt::CppSimdWrapper<T>& b)
 {
     burt::CppSimdWrapper<T> res = burt::CppSimdWrapper<T>::createSimdFromVec(::std::experimental::max(a.data, b.data));
     return res;
