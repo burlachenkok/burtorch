@@ -1,6 +1,6 @@
 call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
 
-set LIBTORCH_PATH=C:\Users\burla\Downloads\old\example_vs_2022\libtorch-win-shared-with-deps-2.5.1+cpu
+set LIBTORCH_PATH=C:\Users\USERNAME\Downloads\old\example_vs_2022\libtorch-win-shared-with-deps-2.5.1+cpu
 
 cl.exe ^
 /I"%LIBTORCH_PATH%\libtorch\include" ^
