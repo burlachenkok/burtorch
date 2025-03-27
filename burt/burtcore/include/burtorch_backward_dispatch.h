@@ -1597,7 +1597,7 @@ inline bool loadFromFile(std::initializer_list<TValueType> nodes, const char* fi
 	if (!mapping_res.isOk) [[unlikely]]
 		return false;
 
-	if (mapping_res.fileSizeInBytes != infoSizePerNodeTotal) [[unlikely]]
+	if (mapping_res.fileSizeInBytes != infoSizePerNodeTotal * nodes.size()) [[unlikely]]
 		return false;
 	
 	const uint8_t* restrict_ext rawMemory = (const uint8_t*)mapping_res.memory;
