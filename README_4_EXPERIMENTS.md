@@ -20,7 +20,7 @@ The goal of this document is to describe how after preparing the environment lau
 
 # Experiments
 
-The baseline scripts for the experiments presented in the table below. Please launch correspond scripts from the corresponded folder which contains the scripts itself. For compiled baselines we provide short build scripts which you can use to build and run experiments wihout any IDE. In addition for `save` experiments produce binary files used for `load` experiments. 
+The baseline scripts for the experiments are presented in the table below. Please launch the corresponding scripts from the corresponding folder, which contains the scripts themselves. For compiled baselines, we provide short build scripts that you can use to build and run experiments without any IDE. In addition, `save` experiments produce binary files used for `load` experiments. 
 
 
 | Number | Experiment Name | Path to Baselines | Path to BurTorch |
@@ -29,7 +29,7 @@ The baseline scripts for the experiments presented in the table below. Please la
 | 2 | Small graph example | `experiments/exp2_small_example` | `burt/bin_small_example` |
 | 3 | Small graph example Loading | `experiments/exp3_small_example_loading` | `burt/bin_small_example_loading` |
 | 4 | Small example saving | `experiments/exp4_small_example_saving` | `burt/bin_small_example_saving` |
-| 5 | Character-level autoregressive prediction based on MLP model. | `experiments/exp5_makemore_nlp_example` | `burt/bin_makemore_example` (requires `datasets/names.txt` as input) |
+| 5 | Character-level autoregressive prediction based on the MLP model. | `experiments/exp5_makemore_nlp_example` | `burt/bin_makemore_example` (requires `datasets/names.txt` as input) |
 | 6 | Character-level autoregressive prediction based on GPT-3-like model. | `experiments/exp6_gpt3_example` | `burt/bin_gpt_example` (requires `datasets/input.txt` as input) |
 | 7 | Experiment 6: GPT-3 Example | `experiments/exp7_small_example_energy` | `burt/bin_small_example_for_energy` |
 
@@ -37,8 +37,8 @@ The baseline scripts for the experiments presented in the table below. Please la
 
 # Utils
 
-* compute. Help scripts to make computation for computation with human in the loop.
+* compute. Help scripts to make computation for computation with humans in the loop.
 * measure. Small binary which measures execution time of process under Windows OS. 
 * prepare. Help scripts to prepare environments for reliable measurements.
-* plotgraph. Help script to visialize graph from text description in dot format via invoking dot binary application from Graphviz.
+* plotgraph. Help script to visualize graph from text description in dot format via invoking dot binary application from Graphviz.
 * plotenergy. Help scripts to prepare visualization for consumed energy.
