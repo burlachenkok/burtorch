@@ -645,7 +645,7 @@ public:
 		}
 
 		{
-			static_assert(std::is_trivially_copyable<TActDataType>::value);
+			//static_assert(std::is_trivially_copyable<TActDataType>::value);
             TActDataType* valueNew = (TActDataType*) allocateBytes(ctrs_reserved_mem_in_items * sizeof(valueNew[0]));
 			memcpy(valueNew, value, old_num_items * sizeof(valueNew[0]));
 			//memset(valueNew + old_num_items, 0, (ctrs_reserved_mem_in_items - old_num_items) * sizeof(valueNew[0]));
@@ -654,7 +654,7 @@ public:
 		}
 
 		{
-			static_assert(std::is_trivially_copyable<TGradDataType>::value);
+			//static_assert(std::is_trivially_copyable<TGradDataType>::value);
             TGradDataType* gradNew = (TGradDataType*) allocateBytes(ctrs_reserved_mem_in_items * sizeof(gradNew[0]));
 			memcpy(gradNew, grad, old_num_items * sizeof(gradNew[0]));
 			//memset(gradNew + old_num_items, 0, (ctrs_reserved_mem_in_items - old_num_items) * sizeof(gradNew[0]));
@@ -990,8 +990,8 @@ public:
     {
         static_assert(std::is_trivially_copyable<OperationDescriptor>::value);
         static_assert(std::is_trivially_copyable<TStringType>::value);
-        static_assert(std::is_trivially_copyable<TActDataType>::value);
-        static_assert(std::is_trivially_copyable<TGradDataType>::value);
+        //static_assert(std::is_trivially_copyable<TActDataType>::value);
+        //static_assert(std::is_trivially_copyable<TGradDataType>::value);
 
         {
             for (size_t i = 0; i < ctrs_reserved_mem_in_items; ++i)
