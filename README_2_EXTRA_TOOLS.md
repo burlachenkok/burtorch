@@ -29,16 +29,16 @@ brew install qt5
 brew install --cask qt-creator
 ```
 
-Another popular IDE these days for Linux and macOS is [CLion](https://www.jetbrains.com/clion/). This IDE natively can open and work CMake project files similar to [QtCreator](https://www.qt.io/product/development-tools).
+Another popular IDE these days for Linux and macOS is [CLion](https://www.jetbrains.com/clion/). This IDE can natively open and work CMake project files similar to [QtCreator](https://www.qt.io/product/development-tools).
 
 # GCC Alternative in macOS/Linux: CLang/LLVM Toolchain
 
-Clang is a frontend tool for several compiled programming languages for the LLVM framework. LLVM framework performs optimizations and code generation for target compute architecture and Operating System.
+Clang is a front-end tool for several compiled programming languages for the LLVM framework. LLVM framework performs optimizations and code generation for target compute architecture and Operating System.
 The goal of the Clang/LLVM is to be a replacement for the GNU Compiler Collection (GCC). Compilers can have a big impact on performance, therefor you may wish to try using LLVM for this project.
 
 ## How To Install CLang/LLVM toolchain in Windows
 
-This ecosystem is natively supported by Visual Studio 2019 v16.2 according to https://learn.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170.
+This ecosystem is natively supported by Visual Studio 2019 v16.2, according to https://learn.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170.
 
 ## How To Install CLang/LLVM toolchain in macOS
 ```bash
@@ -59,14 +59,14 @@ sudo ./llvm.sh 17
 echo "Available Clang Versions:"; ls -1 /usr/bin/clang++-*;
 ```
 
-Please after you install the specific version before building our project Posix OS specifies with CXX and CC environment variables paths to C++ and C compilers:
+Please install the specific version before building the project. Posix OS specifies with CXX and CC environment variables paths to C++ and C compilers:
 
 ```bash 
 export CXX="/usr/bin/clang++-17"
 export CC="/usr/bin/clang-17"
 ```
 
-Please after you install the specific version before building our project Posix OS specifies with CXX and CC environment variables paths to C++ and C compilers:
+Please install the specific version before building the project. Posix OS specifies with CXX and CC environment variables paths to C++ and C compilers:
 
 ```bash
 export CXX="/opt/homebrew/opt/llvm/bin/clang++"
@@ -79,14 +79,14 @@ export CC="/opt/homebrew/opt/llvm/bin/clang-18"
 
 ## Installation for Linux
 
-For Linux please install graphviz and doxygen  with the following commands:
+For Linux, please install graphviz and doxygen  with the following commands:
 ```bash
 sudo apt-get install graphviz doxygen
 ```
 
 ## Installation for Windows OS
 
-For Windows OS please install:
+For Windows OS, please install:
 * Graphviz: https://graphviz.org/_pages/Download/Download_windows.html
 * Microsoft HTML Help: https://learn.microsoft.com/en-us/previous-versions/windows/desktop/htmlhelp/microsoft-html-help-downloads
 * Doxygen: https://www.doxygen.nl/download.html
@@ -101,7 +101,7 @@ brew install graphviz
 
 ## Automatic Documentation Generation
 
-We provide the Doxygen configuration file which includes the generation of documentation in 3 formats:
+We provide the Doxygen configuration file, which includes the generation of documentation in 3 formats:
 - HTML webpages (*.html)
 - Compiled Microsoft HTML Help (.chm)
 - Latex (*.tex, *.pdf)
@@ -115,7 +115,7 @@ python3 doxygen_generate.py
 
 All automatically generated documentation will be located in `./burt/scripts/doxygen/generated`
 
-To clean the folder with automatically generated documentation please execute:
+To clean the folder with automatically generated documentation, please execute:
 
 ```bash
 cd ./burt/scripts/doxygen
@@ -128,20 +128,20 @@ Commands for Doxygen are available:
 
 The documentation in formats of [HTML](https://www.ietf.org/rfc/rfc1866.txt) and [Microsoft HTML Help](https://learn.microsoft.com/en-us/previous-versions/windows/desktop/htmlhelp/microsoft-html-help-1-4-sdk) is generated is the output of the process.
 
-However, if you aim only at generated `pdf` from [LaTeX](https://www.latex-project.org/) it's not the case. First, you need to have installed TeX distribution in your system. There are plenty of systems, but the most popular are:
+However, if you aim only at generating a `pdf` from [LaTeX](https://www.latex-project.org/), it's not the case. First, you need to have TeX distribution installed in your system. There are plenty of systems, but the most popular are:
 - [MiKTeX](https://miktex.org/)
 - [TeX Live](https://www.tug.org/texlive/)
 - [MacTeX](https://www.tug.org/mactex/)
 - [proTeXt](https://www.tug.org/protext/)
 - [teTeX](https://www.tug.org/tetex/)
 
-In our project, we have used MikTeX v21.8.
+In our project, we used MikTeX v21.8.
 
 ## Possible Memory Issues with Generated Documentation PDF
 
-If you have the installed `Latex` environment you may generate documentation in latex format and after that build it as a final PDF document.
+If you have the installed `Latex` environment, you may generate documentation in latex format and, after that, build it as a final PDF document.
 
-However, the project is pretty big and documentation is pretty involved.  We hope that you will not encounter problems in building documentation. In case you have a problem 95 percent of the time, this problem is due to various memory limits in the Latex/TeX engine. If that's the case, then it's most likely you will need to adjust seriously (maybe by x10) the default limits of various buffers and limits in your latex environment. For [MiKTeX](https://miktex.org/about) it can be accomplished by increasing various limits in the `config/texmfapp.ini` configuration file.
+However, the project is pretty big, and the documentation is pretty involved.  We hope that you will not encounter problems in building documentation. In case you have a problem 95 percent of the time, this problem is due to various memory limits in the Latex/TeX engine. If that's the case, then it's most likely you will need to adjust seriously (maybe by x10) the default limits of various buffers and limits in your latex environment. For [MiKTeX](https://miktex.org/about) it can be accomplished by increasing various limits in the `config/texmfapp.ini` configuration file.
 # Ninja Build System as replacement of GNU Make
 
 Ninja is an open-source build system that aims to provide a fast and efficient way to build software projects.
@@ -171,8 +171,8 @@ brew install ninja
 Lcov is a graphical front-end for the coverage testing tool [GNU GCC gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html).
 It provides a way to collect coverage data for programs and then generate HTML-based reports that display the coverage information.
 To use the underlying tool [GNU GCC gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) binaries should be built with correct flags.
-After this binaries should be launched. Each compiled source file will have in filesystem object file.
-After test runs the coverage information will be stored in files with extension `.gcda`.
+After this, binaries should be launched. Each compiled source file will have an object file in the filesystem.
+After test runs, the coverage information will be stored in files with the extension `.gcda`.
 
 ## Install Lcov for Windows
 
@@ -289,7 +289,8 @@ sudo apt-get install qt5-default qttools5-dev-tools qtcreator qt4-demos qt4-doc 
 sudo apt-get install tigervnc-standalone-server
 sudo apt install net-tools
 tigervncserver -localhost no  -geometry 1920x1080
-# Kill VNC server
+
+# Kill the VNC server
 # vnserver -kill :0
 # Check Listen TCP/IP Port for the VNC server
 netstat -nap | grep vnc
