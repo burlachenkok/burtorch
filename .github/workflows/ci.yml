@@ -206,9 +206,8 @@ jobs:
             !${{ github.workspace }}/burt/scripts/build_release/**/*.FileListAbsolute.txt
 
   Build-And-Launch-Unit-Tests-For-macOS-Arm64-Neon:
-    # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md 
-    runs-on: macos-13-xlarge
-    if: contains(github.event.head_commit.message, 'pls.build') && false
+    runs-on: macos-15-xlarge
+    if: contains(github.event.head_commit.message, 'pls.build')
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -247,7 +246,7 @@ jobs:
 
   Build-And-Launch-Unit-Tests-For-macOS-X64:
     # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
-    runs-on: macos-14
+    runs-on: macos-15
     if: contains(github.event.head_commit.message, 'pls.build')
     steps:
       - name: Check out repository code
@@ -339,7 +338,7 @@ jobs:
 
   Information-About-The-macOS-Arm64-System:
     # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
-    runs-on: macos-13-xlarge
+    runs-on: macos-15-xlarge
     if: contains(github.event.head_commit.message, 'pls.info') && false
     steps:
       - run: |
@@ -374,7 +373,7 @@ jobs:
 
   Information-About-The-macOS-X64-System:
     # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
-    runs-on: macos-14
+    runs-on: macos-15
     if: contains(github.event.head_commit.message, 'pls.info')
     steps:
       - run: |
