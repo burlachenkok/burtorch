@@ -26,6 +26,7 @@ target_link_libraries(${PROJECT_NAME} fs)
 target_link_libraries(${PROJECT_NAME} linalg_vectors)
 target_link_libraries(${PROJECT_NAME} random)
 target_link_libraries(${PROJECT_NAME} timers)
+target_link_libraries(${PROJECT_NAME} burtcore)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 configureCompileFlags()
