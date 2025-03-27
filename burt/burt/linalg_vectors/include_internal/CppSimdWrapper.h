@@ -26,7 +26,7 @@ namespace burt
         /** Ctor. All items in data will be initialized with the same value
         * @param value value to broadcast for initialiazation
         */
-        explicit CppSimdWrapper(T value) : data(value)
+        CppSimdWrapper(T value) : data(value)
         {
         }
 
