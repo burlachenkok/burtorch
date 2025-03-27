@@ -1,5 +1,5 @@
-#include "burt/linalg_vectors/include/LightVectorND.h"
 #include "burt/linalg_vectors/include/VectorND_Raw.h"
+#include "burt/linalg_vectors/include/LightVectorND.h"
 #include "burt/timers/include/HighPrecisionTimer.h"
 
 #include "gtest/gtest.h"

@@ -1,5 +1,5 @@
-#include "burt/linalg_vectors/include/LightVectorND.h"
 #include "burt/linalg_vectors/include/VectorND_Raw.h"
+#include "burt/linalg_vectors/include/LightVectorND.h"
 #include "burt/system/include/threads/Thread.h"
 
 #include "gtest/gtest.h"

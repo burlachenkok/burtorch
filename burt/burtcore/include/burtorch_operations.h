@@ -8,8 +8,8 @@
 #include "burtcore/include/burtorch_array4node.h"
 #include "burtcore/include/burtorch_special_copy.h"
 
-#include "burt/linalg_vectors/include/LightVectorND.h"
 #include "burt/linalg_vectors/include/VectorND_Raw.h"
+#include "burt/linalg_vectors/include/LightVectorND.h"
 
 #include <unordered_map>
 #include <vector>

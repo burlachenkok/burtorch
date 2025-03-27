@@ -152,10 +152,7 @@ namespace burt
         static FileMappingResult mapFileToMemory(const char* fname, bool isReadOnly, bool isCreareIfNotExist = false);
 
         static FileMappingResult mapFileToMemoryForWrite(const char* fname, uint32_t file_size);
-        
-        static bool forceForMemoryMappingDiskFlush(const FileMappingResult& viewOfFile);
-        
-
+                
         /** Unmap previously mapped content of the file via mapFileToMemory
         * @param viewOfFile structure that contains information about mapped content of the file  of file
         * @return true if content has been unmapped

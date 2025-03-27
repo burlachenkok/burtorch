@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "burt/linalg_vectors/include_internal/VectorSimdTraits.h"
 #include "burtcore/include/burtorch.h"
 
 TEST(burt, BurtScalarInPlaceGTest)

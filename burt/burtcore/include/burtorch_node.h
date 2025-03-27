@@ -1,6 +1,8 @@
 #pragma once
 
 #include "burt/system/include/PlatformSpecificMacroses.h"
+
+#include "burt/linalg_vectors/include/VectorND_Raw.h"
 #include "burt/linalg_vectors/include/LightVectorND.h"
 
 #include "burtcore/include/burtorch_op_types.h"
