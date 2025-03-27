@@ -399,6 +399,15 @@ namespace burt
             return res;
         }
 
+        bool truncate_was_ok = (ftruncate(file, file_size) == 0);
+
+        if (!truncate_was_ok)
+        {
+            close(file);
+            res.errorMsg = "Failed to truncate the file";
+            return res;
+        }
+
         void* ptr = mmap(nullptr,
                          file_size,
                          PROT_READ | PROT_WRITE,
