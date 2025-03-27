@@ -27,9 +27,9 @@ The goal of this document is to describe how to prepare the main build and runti
     sudo apt-get install gcc-11 g++-11
     ```
 
-    If your Linux distribution does not have Advanced Package Tool (Apt) Package Manager, please use a similar tool distributed with your Operating System.
+    If your Linux distribution does not have the Advanced Package Tool (Apt) Package Manager, please use a similar tool distributed with your Operating System.
 
-2. To get recent versions of CMake under at least Ubuntu Linux distributive in 2024 is not so easy. To get it you will need to do some manual work:
+2. Getting recent versions of CMake under at least Ubuntu Linux distributive in 2024 is not easy. To get it, you will need to do some manual work:
 
     * If your CPU has ARM/AArch64 architecture execute the following:
 
@@ -78,7 +78,7 @@ The goal of this document is to describe how to prepare the main build and runti
 
 ### Prepare Python and Conda Environment
 
-BurTorch do not use Python at all, however baselines use it. If you don't have the Conda package and environment manager you can install them via the following steps for Linux OS:
+BurTorch does not use Python at all. However, baselines use it. If you don't have the Conda package and environment manager, you can install them via the following steps for Linux OS:
 
 ```bash
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
