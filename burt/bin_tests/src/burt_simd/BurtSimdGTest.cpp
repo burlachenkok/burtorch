@@ -3,6 +3,8 @@
 #include "burt/linalg_vectors/include_internal/VectorSimdTraits.h"
 #include "burtcore/include/burtorch.h"
 
+#if SUPPORT_CPU_SSE2_128_bits | SUPPORT_CPU_AVX_256_bits | SUPPORT_CPU_AVX_512_bits | SUPPORT_CPU_CPP_TS_V2_SIMD
+
 TEST(burt, BurtSimdGTest)
 {
 	using TElementType = double;
@@ -155,3 +157,5 @@ TEST(burt, BurtSimdGTest)
 		}
 	}
 }
+
+#endif
