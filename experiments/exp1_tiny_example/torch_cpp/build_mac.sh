@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-#https://download.pytorch.org/libtorch/cpu/libtorch-macos-x86_64-2.2.2.zip
-LIBTORCH_PATH="/Users/burlack/Downloads/libtorch22"
+LIBTORCH_PATH="/Users/<name>/Downloads/libtorch"
 
 g++ -x c++ --std=c++17 \
 -D_GLIBCXX_USE_CXX11_ABI=0 \

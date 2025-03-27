@@ -6,3 +6,4 @@ rm *.dll
 rm *.obj
 rm *.exp
 rm test_app_linux
+rm test_app_macos
