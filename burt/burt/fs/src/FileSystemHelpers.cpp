@@ -339,20 +339,6 @@ namespace burt
         return res;
     }
 
-    bool FileSystemHelpers::forceForMemoryMappingDiskFlush(const FileSystemHelpers::FileMappingResult& viewOfFile)
-    {
-        BOOL result = FlushViewOfFile(viewOfFile.memory, viewOfFile.memorySizeInBytes);
-
-        if (result != 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     bool FileSystemHelpers::unmapFileFromMemory(FileSystemHelpers::FileMappingResult& viewOfFile)
     {
         if (viewOfFile.memory == nullptr)
@@ -383,6 +369,69 @@ namespace burt
     }
 
 #else
+    FileSystemHelpers::FileMappingResult FileSystemHelpers::mapFileToMemoryForWrite(const char* fname, uint32_t file_size)
+    {
+        FileMappingResult res;
+
+        res.memory = nullptr;
+        res.memorySizeInBytes = 0;
+        res.isReadOnly = false;
+        res.isOk = false;
+        res.errorMsg = "";
+        res.fileSizeInBytes = 0;
+
+        int file = open(fname, O_BINARY | O_CREAT | O_RDWR, S_IWOTH | S_IROTH | S_IWGRP | S_IRGRP | S_IWUSR | S_IRUSR);
+
+        if (file == -1)
+        {
+            res.errorMsg = "Can not create/open file";
+            return res;
+        }
+
+        if (file_size == 0)
+        {
+            close(file);
+
+            res.memory = nullptr;
+            res.errorMsg = "";
+            res.isOk = true;
+
+            return res;
+        }
+
+        void* ptr = mmap(nullptr,
+                         file_size,
+                         PROT_READ | PROT_WRITE,
+                         MAP_SHARED,              // Result of file modifications are shared to other processes (e.g. try MEM_PRIVATE if it is not needed)
+                         file,                    // File handle
+                         0);                      // Offset
+
+        close(file);
+
+        if (ptr == MAP_FAILED)
+        {
+            res.errorMsg = "Can not create view of file";
+            return res;
+        }
+        else
+        {
+            res.memory = ptr;
+        }
+
+        res.isOk = true;
+
+        res.memorySizeInBytes = file_size;
+        res.fileSizeInBytes = file_size;
+        res.errorMsg = "";
+        res.isOk = true;
+
+        // File Mapping is finished.
+        // - The pages of the mapping are(automatically) loaded from the file as required
+        // - In fact Memory Mapped files exhibits better performace. 
+        // - For discussion see p.1026 in "The Linu x Programming Interface" book.
+        return res;
+    }
+
     FileSystemHelpers::FileMappingResult FileSystemHelpers::mapFileToMemory(const char* fname, bool isReadOnly, bool isCreareIfNotExist)
     {
         FileMappingResult res;
