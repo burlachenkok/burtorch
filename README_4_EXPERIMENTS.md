@@ -25,14 +25,13 @@ The baseline scripts for the experiments are presented in the table below. Pleas
 
 | Number | Experiment Name | Path to Baselines | Path to BurTorch |
 |--------|---------------|-------------------|------------------|
-| 1 | Tiny graph example | [experiments/exp1_tiny_example](./experiments/exp1_tiny_example) | [burt/bin_tiny_example] |
-| 2 | Small graph example | [experiments/exp2_small_example] | [burt/bin_small_example] |
-| 3 | Small graph example Loading | [experiments/exp3_small_example_loading] | [burt/bin_small_example_loading] |
-| 4 | Small example saving | [experiments/exp4_small_example_saving] | [burt/bin_small_example_saving] |
-| 5 | Character-level autoregressive prediction based on the MLP model. | [experiments/exp5_makemore_nlp_example] | [burt/bin_makemore_example] (requires [datasets/names.txt] as input) |
-| 6 | Character-level autoregressive prediction based on GPT-3-like model. | [experiments/exp6_gpt3_example] | [burt/bin_gpt_example] (requires [datasets/input.txt] as input) |
-| 7 | GPT-3 Example | [experiments/exp7_small_example_energy] | [burt/bin_small_example_for_energy] |
-
+| 1 | Tiny graph example | [experiments/exp1_tiny_example](./experiments/exp1_tiny_example) | [burt/bin_tiny_example](./burt/bin_tiny_example) |
+| 2 | Small graph example | [experiments/exp2_small_example](./experiments/exp2_small_example) | [burt/bin_small_example](./burt/bin_small_example) |
+| 3 | Small graph example Loading | [experiments/exp3_small_example_loading](./experiments/exp3_small_example_loading) | [burt/bin_small_example_loading](./burt/bin_small_example_loading) |
+| 4 | Small example saving | [experiments/exp4_small_example_saving](./experiments/exp4_small_example_saving) | [burt/bin_small_example_saving](./burt/bin_small_example_saving) |
+| 5 | Character-level autoregressive prediction based on the MLP model. | [experiments/exp5_makemore_nlp_example](./experiments/exp5_makemore_nlp_example) | [burt/bin_makemore_example](./burt/bin_makemore_example) (requires [datasets/names.txt](./datasets/names.txt) as input) |
+| 6 | Character-level autoregressive prediction based on GPT-3-like model. | [experiments/exp6_gpt3_example](./experiments/exp6_gpt3_example) | [burt/bin_gpt_example](./burt/bin_gpt_example) (requires [datasets/input.txt] as input) |
+| 7 | GPT-3 Example | [experiments/exp7_small_example_energy](./experiments/exp7_small_example_energy) | [burt/bin_small_example_for_energy](./burt/bin_small_example_for_energy) |
 
 # Utils
 
