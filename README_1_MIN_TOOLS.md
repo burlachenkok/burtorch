@@ -14,6 +14,8 @@ The goal of this document is to describe how to prepare the main build and runti
 
 2. Install/Update CMake to version 3.12 or higher from https://cmake.org/download/
 
+3. Download LibTorch from `https://download.pytorch.org/libtorch/cpu/`. For example for Windows use this verions: `https://download.pytorch.org/libtorch/cpu/libtorch-win-shared-with-deps-2.5.1%2Bcpu.zip`.
+
 ## If you are Working under Linux OS
 
 1. Install GCC-11. See GCC release: https://gcc.gnu.org/releases.html.
