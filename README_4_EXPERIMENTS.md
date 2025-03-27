@@ -18,25 +18,27 @@ The goal of this document is to describe how after preparing the environment lau
 
 5. Please launch experiments in the second CPU Core, because first CPU core very often use by system to handle interrupts in the kernel of OS.
 
-# BaseLines
+# Experiments
 
-The baseline scripts for the experiments presented in the paper are available here:
+The baseline scripts for the experiments presented in the table below. Please launch correspond scripts from the corresponded folder which contains the scripts itself. For compiled baselines we provide short build scripts which you can use to build and run experiments wihout any IDE. In addition for `save` experiments produce binary files used for `load` experiments. 
 
-* experiments/exp1_tiny_example
-* experiments/exp2_small_example
-* experiments/exp3_small_example_loading
-* experiments/exp4_small_example_saving
-* experiments/exp5_makemore_nlp_example
-* experiments/exp6_gpt3_example
 
-Please launch correspond scripts from the corresponded folder which contains the scripts itself.
+| Number | Experiment Name | Path to Baselines | Path to BurTorch |
+|--------|---------------|-------------------|------------------|
+| 1 | Tiny graph example | `experiments/exp1_tiny_example` | `burt/bin_tiny_example` |
+| 2 | Small graph example | `experiments/exp2_small_example` | `burt/bin_small_example` |
+| 3 | Small graph example Loading | `experiments/exp3_small_example_loading` | `burt/bin_small_example_loading` |
+| 4 | Small example saving | `experiments/exp4_small_example_saving` | `burt/bin_small_example_saving` |
+| 5 | Character-level autoregressive prediction based on MLP model. | `experiments/exp5_makemore_nlp_example` | `burt/bin_makemore_example` (requires `datasets/names.txt` as input) |
+| 6 | Character-level autoregressive prediction based on GPT-3-like model. | `experiments/exp6_gpt3_example` | `burt/bin_gpt_example` (requires `datasets/input.txt` as input) |
+| 7 | Experiment 6: GPT-3 Example | `experiments/exp7_small_example_energy` | `burt/bin_small_example_for_energy` |
 
-# BurTorch:
 
-* burt/bin_tiny_example - experiment 1. tiny example benchmark and in addition saving serialized graph repreresentation. To visualize graph use `experiments\utils\plotgraph`.
-* burt/bin_small_example - experiment 2. small example with computation graph from `https://github.com/karpathy/micrograd?tab=readme-ov-file#example-usage`. To visualize graph use `experiments\utils\plotgraph`.
-* burt/bin_small_example_loading - experiment 3. loading small compute graph. Please use binary files from next experiment 4.
-* burt/bin_small_example_saving - experiment 4. saving small compute graph.
-* burt/bin_makemore_example - experiment 5. please provide path to `datasets/names.txt`
-* burt/bin_gpt_example - experiment 6. please provide path to `datasets/input.txt` file.
 
+# Utils
+
+* compute. Help scripts to make computation for computation with human in the loop.
+* measure. Small binary which measures execution time of process under Windows OS. 
+* prepare. Help scripts to prepare environments for reliable measurements.
+* plotgraph. Help script to visialize graph from text description in dot format via invoking dot binary application from Graphviz.
+* plotenergy. Help scripts to prepare visualization for consumed energy.

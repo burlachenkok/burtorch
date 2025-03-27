@@ -127,9 +127,8 @@ Commands for Doxygen are available:
 * Offline `./burt/scripts/doxygen/doxygen_manual-1.9.7.pdf`
 
 The documentation in formats of [HTML](https://www.ietf.org/rfc/rfc1866.txt) and [Microsoft HTML Help](https://learn.microsoft.com/en-us/previous-versions/windows/desktop/htmlhelp/microsoft-html-help-1-4-sdk) is generated is the output of the process.
-However, if you aim only at generated `pdf` from [LaTeX](https://www.latex-project.org/) it's not the case.
 
-First, you need to have installed TeX distribution in your system. There are plenty of systems, but the most popular are:
+However, if you aim only at generated `pdf` from [LaTeX](https://www.latex-project.org/) it's not the case. First, you need to have installed TeX distribution in your system. There are plenty of systems, but the most popular are:
 - [MiKTeX](https://miktex.org/)
 - [TeX Live](https://www.tug.org/texlive/)
 - [MacTeX](https://www.tug.org/mactex/)

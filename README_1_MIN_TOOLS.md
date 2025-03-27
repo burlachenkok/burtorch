@@ -16,67 +16,69 @@ The goal of this document is to describe how to prepare the main build and runti
 
 3. Download LibTorch from `https://download.pytorch.org/libtorch/cpu/`. 
 
-- For Windows use this verions: `https://download.pytorch.org/libtorch/cpu/libtorch-win-shared-with-deps-2.5.1%2Bcpu.zip`
-- For Linux use this version: `https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-2.5.1%2Bcpu.zip`
+    - For Windows OS use this verions: `https://download.pytorch.org/libtorch/cpu/libtorch-win-shared-with-deps-2.5.1%2Bcpu.zip`
+    - For Linux OS use this version: `https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-2.5.1%2Bcpu.zip`
 
 ## If you are Working under Linux OS
 
 1. Install GCC-11. See GCC release: https://gcc.gnu.org/releases.html.
 
-```bash
-sudo apt-get install gcc-11 g++-11
-```
+    ```bash
+    sudo apt-get install gcc-11 g++-11
+    ```
 
-If your Linux distribution does not have Advanced Package Tool (Apt) Package Manager, please use a similar tool distributed with your Operating System.
+    If your Linux distribution does not have Advanced Package Tool (Apt) Package Manager, please use a similar tool distributed with your Operating System.
 
 2. To get recent versions of CMake under at least Ubuntu Linux distributive in 2024 is not so easy. To get it you will need to do some manual work:
 
-* If your CPU has ARM/AArch64 architecture execute the following:
+    * If your CPU has ARM/AArch64 architecture execute the following:
 
-```bash
-sudo apt remove cmake
-# For AArch64 CPUs
-fname=cmake-3.27.0-rc5-linux-aarch64.sh
-wget https://github.com/Kitware/CMake/releases/download/v3.27.0-rc5/${fname}
-sudo cp $fname /opt/
-cd /opt
-sudo bash $fname
-# For AArch64 CPUs
-sudo ln -s /opt/cmake-3.27.0-rc5-linux-aarch64/bin/cmake /usr/local/bin/
-```
+        ```bash
+        sudo apt remove cmake
+        # For AArch64 CPUs
+        fname=cmake-3.27.0-rc5-linux-aarch64.sh
+        wget https://github.com/Kitware/CMake/releases/download/v3.27.0-rc5/${fname}
+        sudo cp $fname /opt/
+        cd /opt
+        sudo bash $fname
+        # For AArch64 CPUs
+        sudo ln -s /opt/cmake-3.27.0-rc5-linux-aarch64/bin/cmake /usr/local/bin/
+        ```
 
-* If your CPU has x86-64 architecture execute the following:
+    * If your CPU has x86-64 architecture execute the following:
 
 
-```bash
-sudo apt remove cmake
-# For Intel/AMD CPUs
-fname=cmake-3.27.0-rc5-linux-x86_64.sh
-wget https://github.com/Kitware/CMake/releases/download/v3.27.0-rc5/${fname}
-sudo cp $fname /opt/
-cd /opt
-sudo bash $fname
-# For Intel/AMD CPUs
-sudo ln -s /opt/cmake-3.27.0-rc5-linux-x86_64/bin/cmake /usr/local/bin/
-```
+        ```bash
+        sudo apt remove cmake
+        # For Intel/AMD CPUs
+        fname=cmake-3.27.0-rc5-linux-x86_64.sh
+        wget https://github.com/Kitware/CMake/releases/download/v3.27.0-rc5/${fname}
+        sudo cp $fname /opt/
+        cd /opt
+        sudo bash $fname
+        # For Intel/AMD CPUs
+        sudo ln -s /opt/cmake-3.27.0-rc5-linux-x86_64/bin/cmake /usr/local/bin/
+        ```
 
 ## If you are Working under macOS
 
 1. Install GCC-11 for example from [brew](https://brew.sh/). See GCC release: https://gcc.gnu.org/releases.html.
-```bash
-brew install gcc@11
-```
+
+    ```bash
+    brew install gcc@11
+    ```
 
 2. Install the recent version of CMake in macOS. For our project, CMake 3.12 is enough:
-```bash
-brew install cmake
-```
+
+    ```bash
+    brew install cmake
+    ```
 
 ## Installations for Benchmarking
 
 ### Prepare Python and Conda Environment
 
-We do not use Python, however baselines use it. If you don't have the Conda package and environment manager you can install them via the following steps for Linux OS:
+BurTorch do not use Python at all, however baselines use it. If you don't have the Conda package and environment manager you can install them via the following steps for Linux OS:
 
 ```bash
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh

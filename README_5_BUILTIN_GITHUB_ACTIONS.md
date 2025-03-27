@@ -2,29 +2,27 @@
 
 ----
 
-The goal of this document is to describe the extra possibilities of using this project to leverage GitHub Continuous Integration (CI) with our support.
+The goal of this document is to describe the extra possibilities of using this project to leverage GitHub Continuous Integration (CI).
 
-----
+## Background
 
-The GitHub itself has the means for organized Continuous Integration (CI). The CI is an engineering practice where developers frequently integrate code.
-We provide the means to activate GitHub CI by providing custom-written configuration files.
-The GitHub actions are activated via changes (commits) pushed via Git into the GitHub repository.
-GitHub uses its terminology and it is worthwhile to summarize it.
+The GitHub itself has the means for organized Continuous Integration (CI). The CI is an engineering practice where developers frequently launch automatic checks, tests, and build. We provide the means to activate GitHub CI by providing custom-written configuration files.
+The GitHub actions are activated via changes (commits) pushed via Git into the GitHub repository. GitHub uses its terminology and it is worthwhile to summarize it next.
 
-# GitHub Terminology for Contintion Integration
+## GitHub Terminology for Contintion Integration
 
 
-* Workflow - is a configurable automated process that will run one or more jobs.
+* *Workflow* - is a configurable automated process that will run one or more jobs.
 
-* Event  - is a specific activity in a repository that triggers a workflow run.
+* *Event*  - is a specific activity in a repository that triggers a workflow run.
 
-* Runner - is a server that runs your workflows when they're triggered. Each runner can run a single job at a time. GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners.
+* *Runner* - is a server that runs your workflows when they're triggered. Each runner can run a single job at a time. GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners.
 
-* Job    - is a set of steps in a workflow that executes on the (same) runner.
+* *Job* - is a set of steps in a workflow that executes on the (same) runner.
 
-* Step   - is either a bash/shell script that will be executed or an action that will be run.
+* *Step* - is either a bash/shell script that will be executed or an action that will be run.
 
-* Action - is a custom application for the GitHub Actions platform that performs a complex but frequently repeated task.
+* *Action* - is a custom application for the GitHub Actions platform that performs a complex but frequently repeated task.
 
 # GitGub Documentation on the Subject
 
@@ -57,7 +55,9 @@ The configuration files itself is located in the project folder:
 ```
 
 If the project is cloned to activate runners you need to perform the needed configuration in the:
-`https://github.com/<github-user>/<repo-name>/settings/actions`
+```
+https://github.com/<github-user>/<repo-name>/settings/actions
+```
 
 # Why we have used CI
 
