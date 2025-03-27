@@ -109,10 +109,6 @@ int main(int argc, char** argv)
 
 	Value<double>::cleanFull();
 	Value<float>::cleanFull();
-	typedef burt::VectorSimdTraits<double, burt::cpu_extension>::VecType VecTypeFP64;
-	typedef burt::VectorSimdTraits<float, burt::cpu_extension>::VecType VecTypeFP32;
-	Value<VecTypeFP64>::cleanFull();
-	Value<VecTypeFP32>::cleanFull();
 
 	//getchar();
     return 0;
