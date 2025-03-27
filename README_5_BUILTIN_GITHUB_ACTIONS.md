@@ -6,10 +6,10 @@ The goal of this document is to describe the extra possibilities of using this p
 
 ## Background
 
-The GitHub itself has the means for organized Continuous Integration (CI). The CI is an engineering practice where developers frequently launch automatic checks, tests, and build. We provide the means to activate GitHub CI by providing custom-written configuration files.
-The GitHub actions are activated via changes (commits) pushed via Git into the GitHub repository. GitHub uses its terminology and it is worthwhile to summarize it next.
+The GitHub itself has the means for organized Continuous Integration (CI). The CI is an engineering practice where developers frequently launch automatic checks, tests, and builds. We provide the means to activate GitHub CI by providing custom-written configuration files.
+The GitHub actions are activated via changes (commits) pushed via Git into the GitHub repository. GitHub uses its own terminology, and it is worthwhile to summarize it next.
 
-## GitHub Terminology for Contintion Integration
+## GitHub Terminology for Continuous Integration
 
 
 * *Workflow* - is a configurable automated process that will run one or more jobs.
@@ -38,7 +38,7 @@ The GitHub actions are activated via changes (commits) pushed via Git into the G
 
 ## Activate CI action after your Commit
 
-To activate CI please add the following text to the commit message:
+To activate CI, please add the following text to the commit message:
 
 | If the commit message contains | Action                                                                                              |
 |----------------------------|-----------------------------------------------------------------------------------------------------|
@@ -54,7 +54,7 @@ The configuration files itself is located in the project folder:
 ./.github/workflows/ci.yaml
 ```
 
-If the project is cloned to activate runners you need to perform the needed configuration in the:
+If the project is cloned to activate runners, you need to perform the needed configuration in the:
 ```
 https://github.com/<github-user>/<repo-name>/settings/actions
 ```
@@ -62,4 +62,4 @@ https://github.com/<github-user>/<repo-name>/settings/actions
 # Why we have used CI
 
 * **Automated Testing:** Ensures the code works as expected with each change.
-* **Consistent Builds:** By automating the build we did not need to manually compile, or build the code across three Operating Systems.
+* **Consistent Builds:** By automating the build, we did not need to manually compile or build the code across three Operating Systems.
