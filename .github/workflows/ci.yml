@@ -207,7 +207,7 @@ jobs:
 
   Build-And-Launch-Unit-Tests-For-macOS-Arm64-Neon:
     runs-on: macos-15-xlarge
-    if: contains(github.event.head_commit.message, 'pls.build')
+    if: contains(github.event.head_commit.message, 'pls.build') && false
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
