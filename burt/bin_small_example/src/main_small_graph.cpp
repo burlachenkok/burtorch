@@ -33,7 +33,7 @@ int main_full_benchmark(int argc, char** argv, const char* test_name)
     burt_assert(Value<TElementType>::numActiveNodes() == 0);
 	auto chk = Value<TElementType>::checkpointForNeurons();
 
-	constexpr size_t kIterations = 200 * 1000;// *0 + 1;
+	constexpr size_t kIterations = 20 * 1000;
 	std::cout << "iterations: " << kIterations << '\n';
 
 	// run without pre-allocated buffers
